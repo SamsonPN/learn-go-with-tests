@@ -41,3 +41,25 @@
   - these tests start with Benchmark[func-name]
   - testing.B gives access to b.N which determines amount of times to run the code you want to benchmark
   - to run it do `go test -bench=.` inside the same directory as the Benchmark test
+
+## 4. Arrays and Slices
+
+* arrays
+  - an array's size is encoded in its type
+  - arr := [5]int{1, 2, 3, 4, 5} is of type [5]int
+    * it WILL fail the type check if you pass it into a func that accepts [4]int
+* slices
+  - `var slice int[]`
+  - `slice := make(int[], len, capacity)`
+  - slices have a *fixed capacity* but you can create new slices from old ones using `append`
+    * sums = append(sums, element)
+    * append returns a new slice so must be assigned to something
+  - can use the python slice syntax to get slices, e.g. slice[1:] returns all values from index 1 to end of slice
+* variadic functions take in any number of arguments
+  - declared like so: `func foo(args ...T)`
+  - args is a []T
+* len() gets length of array or slice
+* `go test -cover` returns % test coverage
+* `reflect.DeepEqual` is useful for comparing 2 arrays/slices by their contents but reduces type-safety of code
+* able to functions to variables so that they are scoped to that function
+
