@@ -8,7 +8,9 @@
         * testing package
         * `t.Helper()` to print line of where test failed
         * `t.Run()` to create subtests
-    - go mod init [file-name] to create a module to run `go mod`
+        * run `go test` where your test files are
+* `go mod init [project-name]` in the root directory to creates a Go module
+  - this tracks module's dependencies
 * declaring functions with arguments and return types
     - named return values
 * if, const, and switch
