@@ -22,7 +22,7 @@
     - *refactor*
         * tests ensure we safely make changes
 
-## 2. integers
+## 2. Integers
 
 * integers, addition
 * creating Testable Examples
@@ -32,3 +32,12 @@
 * godoc
     - run `godoc -http=:6060`
     - then open a web browser and go to `http://localhost:6060/pkg/` to view your documentation
+
+## 3. Iteration
+
+* basic `for` loop
+* Benchmmark tests
+  - similar to tests
+  - these tests start with Benchmark[func-name]
+  - testing.B gives access to b.N which determines amount of times to run the code you want to benchmark
+  - to run it do `go test -bench=.` inside the same directory as the Benchmark test
