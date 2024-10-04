@@ -1,0 +1,10 @@
+Writing tests:
+
+1. needs to be in a file named [filename-to-test]_test.go
+
+2. test function must start with Test
+
+3. test function only takes one argument: t *testing.T 
+
+4. must import "testing" to use *testing.T
+
