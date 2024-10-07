@@ -141,8 +141,8 @@
 * search for items in maps
   - map[key]
   - returns 2 values:
-    1. value of from (key, value) pair
-    2. bool if the key actual exists in the map
+    1. value associated with key
+    2. bool if the key actually exists in the map
       * reason being, if key does not exist in map, map[key] would return a zero-value, e.g. if map is of type map[string]int, then zero value would be 0
 * update items in maps
   - just have to do map[key] = newValue
@@ -161,7 +161,6 @@
     type DictionaryErr string
 
     // any type with an Error() string method fulfills the error interface
-    
     func (e DictionaryErr) Error() string {
       return string(e)
     }
