@@ -9,14 +9,14 @@
         * `t.Helper()` to print line of where test failed
         * `t.Run()` to create subtests
         * run `go test` where your test files are
-* `go mod init [project-name]` in the root directory to creates a Go module
+* `go mod init [project-name]` in the root directory to create a Go module
   - this tracks module's dependencies
 * declaring functions with arguments and return types
     - named return values
 * if, const, and switch
 * declaring variables and constants
 * `TDD Process`
-    - *write failing tests to see it fails*
+    - *write failing tests to see it fail*
         * helps us make sure test is relevant and is easy to understand what it's describing
     - *write smallest amount of code to make it pass to know that it's working*
     - *refactor*
@@ -61,7 +61,7 @@
 * len() gets length of array or slice
 * `go test -cover` returns % test coverage
 * `reflect.DeepEqual` is useful for comparing 2 arrays/slices by their contents but reduces type-safety of code
-* able to functions to variables so that they are scoped to that function
+* able to assign functions to variables so that they are scoped to that function
 
 ## 5. Structs, Methods, and Interfaces
 
@@ -77,7 +77,7 @@
   - the receiverType can be a struct or a Named type, e.g. type MyInt int
 * Table Driven Tests
   - table driven tests allow you to easily maintain and extend a suite of test cases
-  - a slice of test cases defined using a struct
+  - it is a slice of test cases defined using a struct
     * []{ name, input, expected }
   - you iterate over this slice of test cases and use t.Run using the struct.name as the test name
   - able to call individual tests using `go test -run [test-func-name]/[test-name]`
@@ -92,22 +92,20 @@
     * func (w Wallet) Deposit() {} will instead make a copy of Wallet and deposit it to that which does nothing
   - `Go automatically dereferences struct pointers and you do not have to use &struct to call the method`
   - if you call a method with a pointer receiver type:
-    * you do not need to pass in the pointer, i.e.&Wallet.Deposit()
+    * you do not need to pass in the pointer, i.e. &Wallet.Deposit()
     * nor do you have to dereference it inside the method
-      - i.e. 
       ```
       func (w *Wallet) Deposit(amount int) {
         w.balance += amount
       }
       ```
-    * 
-* `nil`
+* `nil:`
   - useful to describe when a value could be missing
   - pointers can be nill
   - when a function returns a pointer, you need to make sure to check if it's nil
     * otherwise, a runtime exception will be raised
     * compiler won't help (only deals with compile time issues)
-* `errors`:
+* `errors:`
   - signals a failure when calling a function/method
   - don't just check errors, handle them gracefully
   - to create a new error:
@@ -126,10 +124,11 @@
   - useful when you want to apply more meaning to the values
     * i.e. we could've just used int for Wallet but this is a Wallet for bitcoin so using type Bitcoin int is more descriptive
   - can let you implement interfaces
-    * e.g. we implemented the Stringer interface to return for Bitcoin
+    * e.g. we implemented the Stringer interface so we can use %s (string) when formatting Bitcoin values
     ```
     func (b Bitcoin) String() string {
 	    return fmt.Sprintf("%d BTC", b)
     }
+    // Output: got 10 BTC, want 20 BTC
     ```
 
