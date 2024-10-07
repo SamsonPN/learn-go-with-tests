@@ -131,4 +131,42 @@
     }
     // Output: got 10 BTC, want 20 BTC
     ```
+  
+## 7. Maps
+
+* create maps
+  - dictionary := map[key-type]value-type{}
+  - dictionary := make(map[key-type]value-type)
+  - key-type for map can only be a *comparable* type because it needs to determine if 2 keys are equal
+* search for items in maps
+  - map[key]
+  - returns 2 values:
+    1. value of from (key, value) pair
+    2. bool if the key actual exists in the map
+      * reason being, if key does not exist in map, map[key] would return a zero-value, e.g. if map is of type map[string]int, then zero value would be 0
+* update items in maps
+  - just have to do map[key] = newValue
+* delete items from a map
+  - delete(map, key)
+* more about errors:
+  - how to create errors that are constants
+  - writing error wrappers
+  ```
+    const (
+      ErrNotFound         = DictionaryErr("could not find the word you were looking for")
+      ErrWordExists       = DictionaryErr("word already exists in dictionary")
+      ErrWordDoesNotExist = DictionaryErr("word does not exist in dictionary")
+    )
+
+    type DictionaryErr string
+
+    // any type with an Error() string method fulfills the error interface
+    
+    func (e DictionaryErr) Error() string {
+      return string(e)
+    }
+  ```
+
+
+
 
