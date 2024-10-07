@@ -166,6 +166,21 @@
     }
   ```
 
+## 8. Dependency Injection
 
+* we were trying to test if our Greeting function actually printed something
+  - if we used fmt.Printf(), we only write to os.Stdout and that is hard to capture in our tests
+  - we then looked at fmt.Printf's source code and saw that it called another function called Fprintf with os.Stdout as an argument
+  - so by default fmt.Printf() uses os.Stdout but what happens if we pass in another argument instead of os.Stdout?
+  - we noticed that os.Stdout implemented the io.Writer interface, so we look for another thing that implemented that to test on
+* so knowing what io.Writer was, we wanted to create and `injecting our own dependency` to Fprintf instead of os.Stdout which allowed us to:
+  - **Test our code**: if you can't test a function easily, it's probably because of the dependencies that are hard-wired into the function or state
+    * therefore using Dependency Injection (via an interface) will help you mock out something you can control
+    * in this case, the hard-wired os.Stdout as the first argument in Fprintf when calling fmt.Printf() made it hard to test if we were printing the correct thing
+    * therefore, we called on Fprintf by passing in our own io.Writer which we can test separately
+  - **Separate our concerns**: decoupling *where the data goes* from *how to generate it*
+    * DI can help if a method/function feels like it has too many responsibilities
+  - **Allow our code to be re-used in different contexts**: the first context our code can be used in is inside tests
+    * but if someone else wants to test out the fucntion, they can inject their own dependencies
 
 
