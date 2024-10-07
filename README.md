@@ -82,3 +82,54 @@
   - you iterate over this slice of test cases and use t.Run using the struct.name as the test name
   - able to call individual tests using `go test -run [test-func-name]/[test-name]`
   - e.g. go test -run TestArea/Rectangle
+
+## 6. Pointers and Errors
+
+* `Pointers:`
+  - pointers to an object allow you to change the original object
+  - functions/methods, by default, make copies of the object
+  - func (w *Wallet) Deposit() {} will change the wallets balance
+    * func (w Wallet) Deposit() {} will instead make a copy of Wallet and deposit it to that which does nothing
+  - `Go automatically dereferences struct pointers and you do not have to use &struct to call the method`
+  - if you call a method with a pointer receiver type:
+    * you do not need to pass in the pointer, i.e.&Wallet.Deposit()
+    * nor do you have to dereference it inside the method
+      - i.e. 
+      ```
+      func (w *Wallet) Deposit(amount int) {
+        w.balance += amount
+      }
+      ```
+    * 
+* `nil`
+  - useful to describe when a value could be missing
+  - pointers can be nill
+  - when a function returns a pointer, you need to make sure to check if it's nil
+    * otherwise, a runtime exception will be raised
+    * compiler won't help (only deals with compile time issues)
+* `errors`:
+  - signals a failure when calling a function/method
+  - don't just check errors, handle them gracefully
+  - to create a new error:
+  ```
+  import "errors"
+
+  var ErrInsufficientFunds = errors.New("cannot withdraw, insufficient funds")
+  ```
+  - `go install github.com/kisielk/errcheck@latest`
+	  * we ran `errcheck .` inside the directory where our tests are
+	  * this essentially tells us to check for different scenarios for that error
+	  * i.e. another test case to think about in this case
+* t.Fatal("message")
+  - stops the test when it is called
+* Create new types from existing ones
+  - useful when you want to apply more meaning to the values
+    * i.e. we could've just used int for Wallet but this is a Wallet for bitcoin so using type Bitcoin int is more descriptive
+  - can let you implement interfaces
+    * e.g. we implemented the Stringer interface to return for Bitcoin
+    ```
+    func (b Bitcoin) String() string {
+	    return fmt.Sprintf("%d BTC", b)
+    }
+    ```
+
