@@ -63,3 +63,22 @@
 * `reflect.DeepEqual` is useful for comparing 2 arrays/slices by their contents but reduces type-safety of code
 * able to functions to variables so that they are scoped to that function
 
+## 5. Structs, Methods, and Interfaces
+
+* `structs`
+  - a data type that allows you to bundle related data together
+* `interfaces`
+  - defines what methods a type has when implementing this interface
+  - in Go, implementing an interface is implicit, i.e. if a type implements all the methods of this interface, then it implements that interface
+* how to declare methods:
+  - func (receiverName receiverType) foo() {}
+  - by convention, the receiverName should be the first letter of the receiverType
+  - e.g. func (r Rectangle) Area() {}
+  - the receiverType can be a struct or a Named type, e.g. type MyInt int
+* Table Driven Tests
+  - table driven tests allow you to easily maintain and extend a suite of test cases
+  - a slice of test cases defined using a struct
+    * []{ name, input, expected }
+  - you iterate over this slice of test cases and use t.Run using the struct.name as the test name
+  - able to call individual tests using `go test -run [test-func-name]/[test-name]`
+  - e.g. go test -run TestArea/Rectangle
