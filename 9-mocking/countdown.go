@@ -17,15 +17,17 @@ type Sleeper interface {
 	Sleep()
 }
 
+// spies are a kind of *mock* that can record how a dependency is used
+// in this case, we are seeing if time.Sleep is being called 3 times
 type SpySleeper struct {
 	Calls int
 }
 
-type DefaultSleeper struct{}
-
 func (s *SpySleeper) Sleep() {
 	s.Calls++
 }
+
+type DefaultSleeper struct{}
 
 func (d *DefaultSleeper) Sleep() {
 	time.Sleep(1 * time.Second)
@@ -45,6 +47,10 @@ func Countdown(out io.Writer, sleeper Sleeper) {
 }
 
 func main() {
+	// in our main function, we are initialize a sleeper variable
+	// with the DefaultSleeper struct
+	// the DefaultSleeper struct implements the Sleeper interface
+	// by implementing the Sleep method which actually calls time.Sleep
 	sleeper := &DefaultSleeper{}
 	Countdown(os.Stdout, sleeper)
 }
