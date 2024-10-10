@@ -183,4 +183,19 @@
   - **Allow our code to be re-used in different contexts**: the first context our code can be used in is inside tests
     * but if someone else wants to test out the fucntion, they can inject their own dependencies
 
+## 9. Mocking
 
+* tested a Countdown feature that writes: "3, 2, 1, Go!" with a 1 second pause in between
+* without mocking, we would not be able to do this
+  - first we needed to determine if it was printing correctly so we injected our own io.Writer
+  - second, we needed to test if there was a 1 second pause in between
+    * we created an interface called Sleeper with the Sleep() method
+      - this allowed us to mock the time.Sleep function without actually having to wait 3+ seconds
+      - and allowed us to use time.Sleep for our own main function to use
+  - third, we created our own **Spy** which is a kind of mock that we pass into our function
+    * in this case, it mimiced the 3 second time.Sleep without actually sleeping for a second
+* mocking allows for a fast feedback loop
+  - we do not have to set up databases/services or other things needed
+  - and it allows our tests to be more stable since those databases or services could fail
+* `mocking allows you to identify if something is doing too much, has too many dependencies, or that you're more concerned with implementation details rather than the behavior`
+  - well-designed code should be easy to test
