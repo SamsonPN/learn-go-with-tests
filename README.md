@@ -199,3 +199,30 @@
   - and it allows our tests to be more stable since those databases or services could fail
 * `mocking allows you to identify if something is doing too much, has too many dependencies, or that you're more concerned with implementation details rather than the behavior`
   - well-designed code should be easy to test
+
+## 10. Concurrency
+
+* `goroutines`: basic unit of concurrency in Go
+  - basically is a separate non-blocking process
+* `anonymous functions` to start the goroutines
+  - we use them b/c they can be immediately invoked once created
+  ```
+  go func() {
+    // code here
+  }()
+  ```
+* `channels` to control communication between different process to `avoid race conditions`
+  - use of the `<-` operator to send/receive data to/from the channel
+  ```
+  ch := make(chan type)
+
+  go func() {
+    // send to channel
+    ch <- result{}
+  }()
+
+  // receive result from channel
+  res := <-ch
+  ```
+* the `race detector` which helps use detect if there are any potential race conditions in our code
+  - `go test -race`
