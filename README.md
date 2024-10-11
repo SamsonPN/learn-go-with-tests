@@ -226,3 +226,15 @@
   ```
 * the `race detector` which helps use detect if there are any potential race conditions in our code
   - `go test -race`
+
+## 11. Select
+
+* `select`:
+  - basically like a switch statement but each case waits on a channel concurrently
+    * waits on multiple channels at once
+  - can use a default case with `case <- time.After(timeout)` to send a signal that does something like return an error
+    * in case the channels don't return anything, time.After returns a channel that sends a signal after timeout
+* `httptest`:
+  - creates test servers for reliable and controllable tests
+    * using actual websites/servers can be unreliable, flaky, or slow
+  - uses the same interfaces as the "real" `net/http` servers so don't have to learn anything new really
