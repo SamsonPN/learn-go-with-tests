@@ -238,3 +238,10 @@
   - creates test servers for reliable and controllable tests
     * using actual websites/servers can be unreliable, flaky, or slow
   - uses the same interfaces as the "real" `net/http` servers so don't have to learn anything new really
+
+## 12. Reflection
+
+* learned about `interface{}` type which is basically like any in TS
+  - `val.Kind()` returns the type of the value passed into anything that accepts interface{}
+  - you can check val.Kind() against `reflect.[type]`, e.g. val.Kind() == reflect.String
+* `best to avoid using reflect`
