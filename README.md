@@ -245,3 +245,41 @@
   - `val.Kind()` returns the type of the value passed into anything that accepts interface{}
   - you can check val.Kind() against `reflect.[type]`, e.g. val.Kind() == reflect.String
 * `best to avoid using reflect`
+
+## 13. Sync
+
+* `mutex:` mutual exclusion lock
+  - when a goroutine has a lock, it blocks the rest of the goroutines until the mutex becomes unlocked
+* `WaitGroup:` is a way of waiting for goroutines to finish their jobs
+* `when to use locks over channels?`
+  - **use channels when passing ownership of data**
+    * e.g. transferring data from one goroutine to another
+    * useful in cases where:
+      - data no longer needed by sender after sending
+      - ensure that only one goroutine is working with the data at a time
+      - implementing producer-consumer where one goroutine produces data and another consuems it
+  - **use mutexes for managing state**
+    * use a mutex when goroutines need to access/modify shared state concurrently
+    * useful in cases where:
+      - multiple goroutines need read/write access to shared data
+      - need to update state without transferring ownership of data
+* `go vet:` allows you to find some bugs you might not see
+  - for example, we were unknowingly copying over the mutex which is not allowed by passing the Counter struct by value which copies everything over
+  - thus, we were able to fix this issue by creating the Counter struct with a constructor and returning its pointer for use
+  ```
+  func NewCounter() *Counter {
+	  return &Counter{}
+  }
+
+  counter := NewCounter()
+  ```
+* `don't use embedding because it's convenient`:
+  - embedding something in a struct makes it **public!!!**
+  - you do not want to embed your mutex which allows the public to lock/unlock
+  ```
+  // DO NOT EVER DO THIS!!!
+  type Counter struct {
+    sync.Mutex
+    value int
+  }
+  ```
