@@ -283,3 +283,20 @@
     value int
   }
   ```
+
+## 14. Context
+
+* how to test HTTP requests using:
+  - httptest.NewRequest() which creates a fake http request
+  - httptest.NewRecorder() which is used to write our response to
+  - [http.handleFunc].ServeHTTP() which simulates what happens when a serve receives an http request and handles it
+* how to use `context` to manage cancellation
+  - call `context.WithCancel()` with the original request context passed in to get the cancelContext and the cancel function
+  - using `request.WithContext(cancelContext)` uses the new cancel context, allowing you to call the `cancel function` to cancel the request
+* how to write a function that accepts context and uses it to canel itself using goroutines, `select`, and channels
+  - you can create a goroutine that passes data into a channel
+  - then you use a select statement to have the channel race with a `context.Done()`
+  - context.Done() returns a Done channel when the context gets cancelled
+* managing cancellation by propagating request scoped context through the call-stack
+  - in our example, we pass context into the goroutine which we would use to get context.Done() in a select statement to cancel the operation
+* how to create our own spy for http.ResponseWriter by implementing Header(), Write([]byte), and WriteHeader(int) methods
